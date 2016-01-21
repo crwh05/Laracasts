@@ -47,18 +47,39 @@ $ php artisan migrate:rollback\
 08 - Eloquent\
 $ php artisan make:model Article\
 $ php artisan tinker\
-$ $name= 'jeff';\
-$ $article - new App\\Article;\
-$ $article->title = 'My First Article';\
-$ $article->published_at = Carbon\\Carbon::now();\
-$ $article->toArray();\
-$ $article->save();\
-$ $article = App\\Article::find(1);\
-$ $article = App\\Article::create(['title' => 'New Article', 'body' => 'New Body', 'published_at' => Carbon\\Carbon::now()]);\
-$ $article->update(['body' => 'Updated AGAIN']);\
-$ \
-$ \
-$ \
-$ \
-$ \
-$ }
+>>> $name= 'jeff';\
+>>> $article = new App\\Article;\
+>>> $article->title = 'My First Article';\
+>>> $article->body = 'Lorem ipsum';\
+>>> $article->published_at = Carbon\\Carbon::now();\
+>>> $article->toArray();\
+>>> $article->save();\
+\
+$ sqlite3 database/database.sqlite\
+sqlite> select * from articles;\
+\
+>>> App\\Article::all()->toArray();\
+>>> $article->title = 'My Updated First Article';\
+>>> $article->save();\
+>>> $article = App\\Article::find(1);\
+>>> $article->toArray();\
+>>> $article = App\\Article::where('body', 'Lorem ipsum')->get();\
+>>> $article = App\\Article::where('body', 'Lorem ipsum')->first();\
+>>> $article = App\\Article::create(['title' => 'New Article', 'body' => 'New Body', 'published_at' => Carbon\\Carbon::now()]);\
+	Illuminate\\Database\\Eloquent\\MassAssignmentException with message 'title'\
+\
+Note: update the $fillable array in Article.php, restart tinker\
+\
+>>> $article = App\\Article::create(['title' => 'New Article', 'body' => 'New Body', 'published_at' => Carbon\\Carbon::now()]);\
+>>> App\\Article::all()->toArray();\
+>>> $article = App\\Article::find(2);\
+>>> $article->toArray();\
+>>> $article->body = \'91Updated\'92;\
+>>> $article->save();\
+>>> $article->toArray();\
+>>> $article->update(['body' => 'Updated AGAIN']);\
+>>> App\\Article::all()->toArray();\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+09 - Basic Workflow}
