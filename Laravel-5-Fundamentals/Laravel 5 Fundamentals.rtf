@@ -1,0 +1,85 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf340
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Laravel 5 Fundamentals\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+01 - Meet Composer\
+Create a laravel project folder\
+$ composer create-project laravel/laravel laravel-52\
+\
+Edit the homestead.yam file to define the site and project folder\
+$ homestead edit\
+$ homestead up\
+$ homestead ssh\
+\
+In Homestead\
+~$ serve laravel-52.dev /home/vagrant/projects/laracasts/Laravel-5-Fundamentals/laravel-52/public\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+07 - Migrations\
+$ php artisan migrate\
+$ sqlite3 database/database.sqlite\
+\
+sqlite> .tables\
+sqlite> .schema\
+\
+$ php artisan migrate:rollback\
+$ php artisan migrate\
+\
+$ php artisan make:migration create_articles_table --create="articles"\
+$ php artisan migrate\
+$ php artisan make:migration add_excerpt_to_articles_table \'97table="articles"\
+$ php artisan migrate\
+$ php artisan migrate:rollback\
+\
+	[Symfony\\Component\\Debug\\Exception\\FatalErrorException]\
+	Class 'Doctrine\\DBAL\\Driver\\PDOSqlite\\Driver' not found\
+\
+$ composer require doctrine/dbal\
+$ php artisan migrate:rollback\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+08 - Eloquent\
+$ php artisan make:model Article\
+$ php artisan tinker\
+>>> $name= 'jeff';\
+>>> $article = new App\\Article;\
+>>> $article->title = 'My First Article';\
+>>> $article->body = 'Lorem ipsum';\
+>>> $article->published_at = Carbon\\Carbon::now();\
+>>> $article->toArray();\
+>>> $article->save();\
+\
+$ sqlite3 database/database.sqlite\
+sqlite> select * from articles;\
+\
+>>> App\\Article::all()->toArray();\
+>>> $article->title = 'My Updated First Article';\
+>>> $article->save();\
+>>> $article = App\\Article::find(1);\
+>>> $article->toArray();\
+>>> $article = App\\Article::where('body', 'Lorem ipsum')->get();\
+>>> $article = App\\Article::where('body', 'Lorem ipsum')->first();\
+>>> $article = App\\Article::create(['title' => 'New Article', 'body' => 'New Body', 'published_at' => Carbon\\Carbon::now()]);\
+	Illuminate\\Database\\Eloquent\\MassAssignmentException with message 'title'\
+\
+Note: update the $fillable array in Article.php, restart tinker\
+\
+>>> $article = App\\Article::create(['title' => 'New Article', 'body' => 'New Body', 'published_at' => Carbon\\Carbon::now()]);\
+>>> App\\Article::all()->toArray();\
+>>> $article = App\\Article::find(2);\
+>>> $article->toArray();\
+>>> $article->body = \'91Updated\'92;\
+>>> $article->save();\
+>>> $article->toArray();\
+>>> $article->update(['body' => 'Updated AGAIN']);\
+>>> App\\Article::all()->toArray();\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+09 - Basic Workflow}
