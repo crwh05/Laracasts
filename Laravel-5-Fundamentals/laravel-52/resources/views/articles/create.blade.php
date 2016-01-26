@@ -16,6 +16,11 @@
           {!! Form::label('body', 'Body:') !!}
           {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
         </div>
+        <!-- Publish on Form Input -->
+        <div class="form-group">
+          {!! Form::label('published_at', 'Publish on:') !!}
+          {!! Form::input('date', 'published_at', date('Y-m-d'), ['class' => 'form-control']) !!}
+        </div>
         <!-- Add Article Form Input -->
         <div class="form-group">
           {!! Form::submit('Add Article', ['class' => 'btn btn-primary form-control']) !!}
