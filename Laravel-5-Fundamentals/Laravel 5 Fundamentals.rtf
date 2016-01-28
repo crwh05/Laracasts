@@ -180,4 +180,97 @@ Passing variables\
 Reusing forms\
 Use more general form request class\
 \
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+14 - Eloquent Relationships\
+\
+$ php artisan migrate:refresh\
+\
+Create a dummy user\
+$ php artisan tinker\
+>>> $user = new App\\User;\
+>>> $user->username = 'John Doe';\
+=> "John Doe"\
+>>> $user->email = 'john@example.com';\
+=> "john@example.com"\
+>>> $user->password = bcrypt('password');\
+=> "$2y$10$ILMUzla4gU5JA3ryLVulHOa1JC69/BP.hPUWj/E5Ag7uC/C48364K"\
+>>> $user->save();\
+=> true\
+>>> App\\User::first()->toArray();\
+\
+Update form to have hidden user_id\
+\
+$ php artisan tinker\
+>>> App\\Article::first()->toArray();\
+=> [\
+     "id" => 1,\
+     "user_id" => "1",\
+     "title" => "New Article",\
+     "body" => "The body",\
+     "created_at" => "2016-01-27 12:45:30",\
+     "updated_at" => "2016-01-27 12:45:30",\
+     "published_at" => "2016-01-27 00:00:00",\
+     "excerpt" => null,\
+   ]\
+>>> $user = App\\User::first();\
+=> App\\User \{#643\
+     id: "1",\
+     username: "John Doe",\
+     email: "john@example.com",\
+     created_at: "2016-01-27 12:41:41",\
+     updated_at: "2016-01-27 12:41:41",\
+   \}\
+>>> $user->toArray();\
+=> [\
+     "id" => 1,\
+     "username" => "John Doe",\
+     "email" => "john@example.com",\
+     "created_at" => "2016-01-27 12:41:41",\
+     "updated_at" => "2016-01-27 12:41:41",\
+   ]\
+>>> $user->articles->toArray();\
+=> [\
+     [\
+       "id" => 1,\
+       "user_id" => "1",\
+       "title" => "New Article",\
+       "body" => "The body",\
+       "created_at" => "2016-01-27 12:45:30",\
+       "updated_at" => "2016-01-27 12:45:30",\
+       "published_at" => "2016-01-27 00:00:00",\
+       "excerpt" => null,\
+     ],\
+   ]\
+\
+Or the inverse:\
+\
+>>> $article = App\\Article::first();\
+=> App\\Article \{#647\
+     id: "1",\
+     user_id: "1",\
+     title: "New Article",\
+     body: "The body",\
+     created_at: "2016-01-27 12:45:30",\
+     updated_at: "2016-01-27 12:45:30",\
+     published_at: "2016-01-27 00:00:00",\
+     excerpt: null,\
+   \}\
+>>> $article->user->toArray();\
+=> [\
+     "id" => 1,\
+     "username" => "John Doe",\
+     "email" => "john@example.com",\
+     "created_at" => "2016-01-27 12:41:41",\
+     "updated_at" => "2016-01-27 12:41:41",\
+   ]\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+15 - Easy Auth\
+\
+\
+\
 }
