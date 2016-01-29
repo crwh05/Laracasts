@@ -26,7 +26,11 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', 'manager']], function () {
+    Route::get('foo', function()
+    {
+        return 'This page may only be viewed by managers';
+    });
 });
 
 Route::group(['middleware' => 'web'], function () {
@@ -37,7 +41,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('articles', 'ArticlesController');
 
     Route::get('about', 'PagesController@about');
-    
+
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
